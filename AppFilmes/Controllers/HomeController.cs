@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using TMDbLib.Client;
 using TMDbLib.Objects.Movies;
 
@@ -12,7 +13,8 @@ namespace AppFilmes.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+            
+            ViewBag.Message = "";
             var chave = System.Web.Configuration.WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
             var tmDbClient = new TMDbClient(chave);
             var filmes = tmDbClient.GetMovieList(MovieListType.Popular);
