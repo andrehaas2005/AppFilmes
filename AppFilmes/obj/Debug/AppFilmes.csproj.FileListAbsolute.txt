@@ -47,3 +47,4 @@ C:\ProjetoNet\AppFilmes\AppFilmes\bin\TMDbLib.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\Hasseware.Net.TMDb.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\RestSharp.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\TMDbLib.pdb
+C:\ProjetoNet\AppFilmes\AppFilmes\bin\AppFilmes.dll.config
