@@ -82,20 +82,20 @@ namespace AppFilmes.Controllers
                 {
                     var filmeAux = new Filme()
                     {
-                        Adult = f.Adult,
-                        BackdropPath = f.BackdropPath,
-                        GenreIds = f.GenreIds,
-                        Id = f.Id,
-                        OriginalLanguage = f.OriginalLanguage,
-                        OriginalTitle = f.OriginalTitle,
-                        Overview = f.Overview,
-                        Popularity = f.Popularity,
-                        PosterPath = f.PosterPath,
-                        ReleaseDate = f.ReleaseDate,
-                        Title = f.Title,
-                        Video = f.Video,
-                        VoteAverage = f.VoteAverage,
-                        VoteCount = f.VoteCount
+                        Adult               = f.Adult,
+                        BackdropPath        = f.BackdropPath,
+                        GenreIds            = f.GenreIds,
+                        FilmeId             = f.Id,
+                        OriginalLanguage    = f.OriginalLanguage,
+                        OriginalTitle       = f.OriginalTitle,
+                        Overview            = f.Overview,
+                        Popularity          = f.Popularity,
+                        PosterPath          = f.PosterPath,
+                        ReleaseDate         = f.ReleaseDate,
+                        Title               = f.Title,
+                        Video               = f.Video,
+                        VoteAverage         = f.VoteAverage,
+                        VoteCount           = f.VoteCount
                     };
                     filmes.Add(filmeAux);
                 });
