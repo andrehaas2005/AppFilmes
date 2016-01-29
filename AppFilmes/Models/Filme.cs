@@ -8,7 +8,9 @@ namespace AppFilmes.Models
         public bool Adult { get; set; }
         public string BackdropPath { get; set; }
         public List<int> GenreIds { get; set; }
+        
         public int FilmeId { get; set; }
+        public int Codigothemoviedb { get; set; }
         public string OriginalLanguage { get; set; }
         public string OriginalTitle { get; set; }
         public string Overview { get; set; }
@@ -19,6 +21,8 @@ namespace AppFilmes.Models
         public bool Video { get; set; }
         public double VoteAverage { get; set; }
         public int VoteCount { get; set; }
+
+        public virtual List<Genero> Generos { get; set; }
 
         #region .: Classe gerada pelo JSon de retorno da URL 
         //public class Rootobject

@@ -1,4 +1,5 @@
-﻿using AppFilmes.Models;
+﻿using System.Linq;
+using AppFilmes.Models;
 using System;
 using System.Collections.Generic;
 using System.Web.Configuration;
@@ -25,16 +26,13 @@ namespace AppFilmes.Controllers
 
             #endregion
 
-            var baseAddress = new Uri("http://api.themoviedb.org/3/");
-
-
             #region .: Linhas Comentadas :.
             //            var request = System.Net.WebRequest.Create("http://api.themoviedb.org/3/genre/tv/list?api_key=8fb08dee4651c3d9b1536a69ea3f3d16") as System.Net.HttpWebRequest;
             //            request.KeepAlive = true;
             //            request.Method = "GET";
             //            request.Accept = "application/json";
 
-
+            // http://api.themoviedb.org/3/genre/movie/list?api_key=8fb08dee4651c3d9b1536a69ea3f3d16&language=pt
             //            JsonSchema schema = JsonSchema.Parse(@"{'type':'object','properties':{
             //                                                    'genres': {'type':'array'}
             //                                                    }
@@ -64,46 +62,13 @@ namespace AppFilmes.Controllers
             //            }
 
             #endregion
+            var baseAddress = new Uri("http://api.themoviedb.org/3/");
 
 
-            ViewBag.Message = "";
-           
-            var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
 
-            var tmDbClient = new TMDbClient(chave);
-            var lstFilmes = new List<SearchContainer<MovieResult>>();
-            var filmes = new List<Filme>();
-            for (int i = 1; i < 20; i++)
-            {
-                var filme = tmDbClient.GetMovieList(MovieListType.Popular,"pt", i);
-                lstFilmes.Add(filme);
 
-                filme.Results.ForEach(f =>
-                {
-                    var filmeAux = new Filme()
-                    {
-                        Adult               = f.Adult,
-                        BackdropPath        = f.BackdropPath,
-                        GenreIds            = f.GenreIds,
-                        FilmeId             = f.Id,
-                        OriginalLanguage    = f.OriginalLanguage,
-                        OriginalTitle       = f.OriginalTitle,
-                        Overview            = f.Overview,
-                        Popularity          = f.Popularity,
-                        PosterPath          = f.PosterPath,
-                        ReleaseDate         = f.ReleaseDate,
-                        Title               = f.Title,
-                        Video               = f.Video,
-                        VoteAverage         = f.VoteAverage,
-                        VoteCount           = f.VoteCount
-                    };
-                    filmes.Add(filmeAux);
-                });
-               
-                
-            }
 
-         
+
             return View();
         }
 
