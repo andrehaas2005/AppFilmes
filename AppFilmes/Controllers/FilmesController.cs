@@ -20,9 +20,19 @@ namespace AppFilmes.Controllers
 
         public ActionResult Index()
         {
+            FilmeContext db = new FilmeContext();
+            var lstfilmes = db.Filmes.Take(20);
+
+            return View(lstfilmes);
+        }
+
+
+
+        public void IniciandoBase()
+        {
             var bd = new FilmeContext();
             List<Genero> generos = new List<Genero>();
-            List<Filme>  filmes = new List<Filme>();
+            List<Filme> filmes = new List<Filme>();
             var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
             var tmDbClient = new TMDbClient(chave);
             var lstFilmes = new List<SearchContainer<MovieResult>>();
@@ -31,17 +41,30 @@ namespace AppFilmes.Controllers
 
             try
             {
-                 generos = bd.Generos.ToList();
+                generos = bd.Generos.ToList();
+                var auxGeneros = tmDbClient.GetMovieGenres("pt");
                 //List<Genero> generos = null;
-                if (generos.Any())
+                if (!generos.Any() || generos.Count == 0)
                 {
-                    var auxGeneros = tmDbClient.GetMovieGenres("pt");
-
                     auxGeneros.ForEach(g =>
                     {
-                        var generoNoBanco = generos.First(gn => gn.CodigoGenero != g.Id);
+                        var genero = new Genero()
+                        {
+                            CodigoGenero = g.Id,
+                            Nome = g.Name
+                        };
+                        bd.Generos.Add(genero);
+                        bd.SaveChanges();
 
-                        if (generoNoBanco != null)
+                    });
+                }
+                else
+                {
+                    auxGeneros.ForEach(g =>
+                    {
+                        var generoNoBanco = generos.First(gn => gn.CodigoGenero == g.Id);
+
+                        if (generoNoBanco.Generoid == 0)
                         {
                             var genero = new Genero()
                             {
@@ -55,72 +78,66 @@ namespace AppFilmes.Controllers
 
                     });
                 }
-       
+
             #endregion
 
-            #region .: Criando Filmes :.
+                #region .: Criando Filmes :.
 
-           
 
-                 filmes = bd.Filmes.ToList();
 
-                if (filmes.Any())
+                filmes = bd.Filmes.ToList();
+
+                int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
+
+                for (int i = 1; i < paginas; i++)
                 {
-                    int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
 
-                    for (int i = 1; i < paginas; i++)
+                    var filme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", i);
+
+                    filme.Results.ForEach(f =>
                     {
-                        var filme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", i);
+                        Filme filmenoBanco = new Filme();
 
-                        lstFilmes.Add(filme);
-
-                        filme.Results.ForEach(f =>
+                        if (filmes.Count > 0)
                         {
-                            var filmenoBanco = filmes.First(fbd => fbd.Codigothemoviedb != f.Id);
-                            if (filmenoBanco != null)
+                            filmenoBanco = filmes.First(fbd => fbd.Codigothemoviedb == f.Id);
+                        }
+                        if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
+                        {
+
+                            var filmeAux = new Filme()
                             {
+                                Adult = f.Adult,
+                                BackdropPath = f.BackdropPath,
+                                GenreIds = f.GenreIds,
+                                Codigothemoviedb = f.Id,
+                                OriginalLanguage = f.OriginalLanguage,
+                                OriginalTitle = f.OriginalTitle,
+                                Overview = f.Overview,
+                                Popularity = f.Popularity,
+                                PosterPath = f.PosterPath,
+                                ReleaseDate = f.ReleaseDate,
+                                Title = f.Title,
+                                Video = f.Video,
+                                VoteAverage = f.VoteAverage,
+                                VoteCount = f.VoteCount
+                            };
 
-                                var filmeAux = new Filme()
-                                {
-                                    Adult = f.Adult,
-                                    BackdropPath = f.BackdropPath,
-                                    GenreIds = f.GenreIds,
-                                    Codigothemoviedb = f.Id,
-                                    OriginalLanguage = f.OriginalLanguage,
-                                    OriginalTitle = f.OriginalTitle,
-                                    Overview = f.Overview,
-                                    Popularity = f.Popularity,
-                                    PosterPath = f.PosterPath,
-                                    ReleaseDate = f.ReleaseDate,
-                                    Title = f.Title,
-                                    Video = f.Video,
-                                    VoteAverage = f.VoteAverage,
-                                    VoteCount = f.VoteCount
-                                };
+                            bd.Filmes.Add(filmeAux);
+                            bd.SaveChanges();
 
-
-
-                                bd.Filmes.Add(filmeAux);
-                                bd.SaveChanges();
-                            }
-                        });
-
-
-                    }
+                        }
+                    });
 
                 }
-                return View(filmes);
+
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
-                
+
             }
-
-            #endregion
-
-
-            return View();
+                #endregion
         }
 
         //
@@ -210,3 +227,4 @@ namespace AppFilmes.Controllers
         }
     }
 }
+
