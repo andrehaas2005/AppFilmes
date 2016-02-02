@@ -21,7 +21,7 @@ namespace AppFilmes.Controllers
         public ActionResult Index()
         {
             FilmeContext db = new FilmeContext();
-            var lstfilmes = db.Filmes.Take(20);
+            var lstfilmes = db.Filmes.Take(10);
 
             return View(lstfilmes);
         }
@@ -30,7 +30,7 @@ namespace AppFilmes.Controllers
 
         public void IniciandoBase()
         {
-            var bd = new FilmeContext();
+            
             List<Genero> generos = new List<Genero>();
             List<Filme> filmes = new List<Filme>();
             var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
@@ -38,10 +38,15 @@ namespace AppFilmes.Controllers
             var lstFilmes = new List<SearchContainer<MovieResult>>();
 
             #region .: Criando Generos :.
-
+            var bd = new FilmeContext();
+            
             try
             {
-                generos = bd.Generos.ToList();
+                if (!bd.Generos.Any())
+                {
+
+                    generos = bd.Generos.ToList();
+                }
                 var auxGeneros = tmDbClient.GetMovieGenres("pt");
                 //List<Genero> generos = null;
                 if (!generos.Any() || generos.Count == 0)
