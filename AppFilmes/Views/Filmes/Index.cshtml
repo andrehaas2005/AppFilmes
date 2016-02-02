@@ -21,7 +21,7 @@
     </div>
     <!-- /.row -->
     <!-- Projects Row -->
- @foreach (var item in Model)
+    @foreach (var item in Model)
     {
 
         <div class="col-md-2 portfolio-item">
@@ -31,14 +31,17 @@
                 <h3>
                     <a href="#">@Html.DisplayFor(modelItem => item.Title)</a>
                 </h3>
-                <p>@Html.DisplayFor(modelItem => item.Overview)</p>
+                @{string texto = string.Empty;
+                if (texto.Length > 100) { texto = item.Overview.Substring(0, 100); } else { texto = item.Overview; }
+                }
+                <p>@texto</p>
             </a>
         </div>
 
 
 
     }
-    
+
     <!-- Pagination -->
     <div class="row text-center">
         <div class="col-lg-12">
