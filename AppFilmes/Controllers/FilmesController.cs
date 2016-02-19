@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.IO;
 using AppFilmes.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,9 @@ namespace AppFilmes.Controllers
     public class FilmesController : Controller
     {
 
-
+        private static String chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
+        private TMDbClient tmDbClient = new TMDbClient(chave);
+        private FilmeContext bd = new FilmeContext();
 
         //
         // GET: /Filmes/
@@ -30,16 +34,15 @@ namespace AppFilmes.Controllers
 
         public void IniciandoBase()
         {
-            
+
             List<Genero> generos = new List<Genero>();
-            List<Filme> filmes = new List<Filme>();
-            var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
-            var tmDbClient = new TMDbClient(chave);
-            var lstFilmes = new List<SearchContainer<MovieResult>>();
+
+
+
 
             #region .: Criando Generos :.
-            var bd = new FilmeContext();
-            
+
+
             try
             {
                 if (!bd.Generos.Any())
@@ -88,10 +91,6 @@ namespace AppFilmes.Controllers
 
                 #region .: Criando Filmes :.
 
-
-
-                filmes = bd.Filmes.ToList();
-
                 int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
 
                 for (int i = 1; i < paginas; i++)
@@ -99,52 +98,124 @@ namespace AppFilmes.Controllers
 
                     var filme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", i);
 
-                    filme.Results.ForEach(f =>
-                    {
-                        Filme filmenoBanco = new Filme();
-
-                        if (filmes.Count > 0)
-                        {
-                            filmenoBanco = filmes.First(fbd => fbd.Codigothemoviedb == f.Id);
-                        }
-                        if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
-                        {
-
-                            var filmeAux = new Filme()
-                            {
-                                Adult = f.Adult,
-                                BackdropPath = f.BackdropPath,
-                                GenreIds = f.GenreIds,
-                                Codigothemoviedb = f.Id,
-                                OriginalLanguage = f.OriginalLanguage,
-                                OriginalTitle = f.OriginalTitle,
-                                Overview = f.Overview,
-                                Popularity = f.Popularity,
-                                PosterPath = f.PosterPath,
-                                ReleaseDate = f.ReleaseDate,
-                                Title = f.Title,
-                                Video = f.Video,
-                                VoteAverage = f.VoteAverage,
-                                VoteCount = f.VoteCount
-                            };
-
-                            bd.Filmes.Add(filmeAux);
-                            bd.SaveChanges();
-
-                        }
-                    });
+                    InsertFilmes(filme);
 
                 }
 
 
             }
-            catch (Exception )
+            catch (Exception)
             {
 
             }
                 #endregion
         }
 
+
+        public void InsertFilmes(SearchContainer<MovieResult> filme)
+        {
+            var filmes = new List<Filme>();
+            filmes = bd.Filmes.ToList();
+
+            filme.Results.ForEach(f =>
+            {
+                var filmenoBanco = new Filme();
+
+                if (filmes.Count > 0)
+                {
+                    filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
+                }
+                if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
+                {
+
+                    var filmeAux = new Filme()
+                    {
+                        Adult = f.Adult,
+                        BackdropPath = f.BackdropPath,
+                        GenreIds = f.GenreIds,
+                        Codigothemoviedb = f.Id,
+                        OriginalLanguage = f.OriginalLanguage,
+                        OriginalTitle = f.OriginalTitle,
+                        Overview = f.Overview,
+                        Popularity = f.Popularity,
+                        PosterPath = f.PosterPath,
+                        ReleaseDate = f.ReleaseDate,
+                        Title = f.Title,
+                        Video = f.Video,
+                        VoteAverage = f.VoteAverage,
+                        VoteCount = f.VoteCount
+                    };
+
+                    bd.Filmes.Add(filmeAux);
+                    bd.SaveChanges();
+                    LogdeInclusao("= > Filme : " + filmeAux.Title + " - Lançado em : " + filmeAux.ReleaseDate.ToString() + " - Incluido em : " + DateTime.Now.ToString());
+                }
+            });
+        }
+
+        public void AtualizarBase()
+        {
+            var qtdaDePaginas = tmDbClient.GetMovieList(MovieListType.Upcoming, "pt").TotalPages;
+            for (int i = 1; i < qtdaDePaginas; i++)
+            {
+                var filmesLancado = tmDbClient.GetMovieList(MovieListType.Upcoming, "pt", i);
+                InsertFilmes(filmesLancado);
+            }
+
+        }
+
+
+        public bool LogdeInclusao(string conteudo)
+        {
+            const string pathArquivo = @"C:\ProjetoNet\AppFilmes\AppFilmes\Content\Arquivos\Logs\LogInclusaoDeFilmes.txt";
+
+            try
+            {
+                using (StreamWriter file = new StreamWriter(pathArquivo,true))
+                {
+                    
+                    file.WriteLine(conteudo);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                
+                return false;
+            }
+            
+
+
+
+            //if (!System.IO.File.Exists(pathArquivo))
+            //{
+            //    var arquivo = System.IO.File.Create(pathArquivo);
+            //    var arquivo1 = new System.IO.FileStream(pathArquivo);
+            //    if (arquivo.CanWrite)
+            //    {
+            //        byte[] teste = new byte[] { byte.Parse(conteudo) };
+            //        arquivo.WriteByte();
+            //        arquivo.Flush();
+            //        arquivo.Dispose();
+            //        return true;
+            //    }
+            //}
+            //else
+            //{
+            //    var arquivo = System.IO.File.OpenWrite(pathArquivo);
+            //    if (arquivo.CanWrite)
+            //    {
+            //        byte[] teste = new byte[] { byte.Parse(conteudo) };
+            //        arquivo.Write(teste, 1, teste.Length);
+            //        arquivo.Flush();
+            //        arquivo.Dispose();
+            //        return true;
+            //    }
+            //}
+            
+            
+            return false;
+        }
         //
         // GET: /Filmes/Details/5
 
