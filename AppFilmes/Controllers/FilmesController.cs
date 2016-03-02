@@ -38,7 +38,7 @@ namespace AppFilmes.Controllers
             var lstFilmes = new List<SearchContainer<MovieResult>>();
 
 
-            var bd = new FilmeContext();
+           // var bd = new FilmeContext();
             #region .: Criando Generos :.
             try
             {

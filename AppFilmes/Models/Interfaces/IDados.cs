@@ -13,5 +13,5 @@ namespace AppFilmes.Models.Interfaces
         IEnumerable<T> ListAll();
         T ListbyId(int id);
 
-     }
+    }
 }
