@@ -182,7 +182,13 @@
     <Compile Include="Models\FilmeContext.cs" />
     <Compile Include="Models\Filme.cs" />
     <Compile Include="Models\Filme_Genero.cs" />
+    <Compile Include="Models\FimeDAL.cs" />
     <Compile Include="Models\Genero.cs" />
+    <Compile Include="Models\GeneroDAL.cs" />
+    <Compile Include="Models\Interfaces\IDados.cs" />
+    <Compile Include="Models\Interfaces\IFilme.cs" />
+    <Compile Include="Models\Interfaces\IGenero.cs" />
+    <Compile Include="Models\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
