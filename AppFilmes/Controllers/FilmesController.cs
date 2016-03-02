@@ -35,57 +35,37 @@ namespace AppFilmes.Controllers
         public void IniciandoBase()
         {
 
-            List<Genero> generos = new List<Genero>();
+
+            //List<Genero> lstgeneros = new List<Genero>();
+            //List<Filme> filmes = new List<Filme>();
+            var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
+            var tmDbClient = new TMDbClient(chave);
+            var lstFilmes = new List<SearchContainer<MovieResult>>();
 
 
 
-
+           // var bd = new FilmeContext();
             #region .: Criando Generos :.
-
-
             try
             {
-                if (!bd.Generos.Any())
-                {
+                var generos = new GeneroDAL();
 
-                    generos = bd.Generos.ToList();
-                }
-                var auxGeneros = tmDbClient.GetMovieGenres("pt");
-                //List<Genero> generos = null;
-                if (!generos.Any() || generos.Count == 0)
+                var lstgenerostmDb = tmDbClient.GetMovieGenres("pt");
+
+                lstgenerostmDb.ForEach(g =>
                 {
-                    auxGeneros.ForEach(g =>
+                    var genero = new Genero()
                     {
-                        var genero = new Genero()
-                        {
-                            CodigoGenero = g.Id,
-                            Nome = g.Name
-                        };
-                        bd.Generos.Add(genero);
-                        bd.SaveChanges();
-
-                    });
-                }
-                else
-                {
-                    auxGeneros.ForEach(g =>
+                        CodigoGenero = g.Id,
+                        Nome = g.Name
+                    };
+                    if ( generos.BuscaCodigo(genero.CodigoGenero) == null)
                     {
-                        var generoNoBanco = generos.First(gn => gn.CodigoGenero == g.Id);
+                        generos.Insert(genero);    
+                    }
+                    
+                });
 
-                        if (generoNoBanco.Generoid == 0)
-                        {
-                            var genero = new Genero()
-                            {
-                                CodigoGenero = g.Id,
-                                Nome = g.Name
-                            };
-                            bd.Generos.Add(genero);
-                            bd.SaveChanges();
-                        }
-
-
-                    });
-                }
 
             #endregion
 
@@ -117,7 +97,9 @@ namespace AppFilmes.Controllers
             var filmes = new List<Filme>();
             filmes = bd.Filmes.ToList();
 
+
             filme.Results.ForEach(f =>
+
             {
                 var filmenoBanco = new Filme();
 
