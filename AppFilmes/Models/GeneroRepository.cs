@@ -7,7 +7,7 @@ using AppFilmes.Models.Interfaces;
 
 namespace AppFilmes.Models
 {
-    public class GeneroDAL : RepositoryBase<Genero>,IGenero
+    public class GeneroRepository : RepositoryBase<Genero>,IGenero
     {
         public Genero BuscaCodigo(int Codigo)
         {

@@ -40,7 +40,7 @@ namespace AppFilmes
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css",
-                        "~/Content/themes/2ColPortFolio/CSS/3-col-portfolio.css",
+                        //"~/Content/themes/2ColPortFolio/CSS/3-col-portfolio.css",
                         "~/Content/themes/2ColPortFolio/CSS/bootstrap.css"));
         }
     }

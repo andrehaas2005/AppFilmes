@@ -6,7 +6,7 @@ using AppFilmes.Models.Interfaces;
 
 namespace AppFilmes.Models
 {
-    public class FimeDAL : RepositoryBase<Filme>,IFilme
+    public class FilmeRepository : RepositoryBase<Filme>,IFilme
     {
         public Filme BuscaFilmePorCodigo(int codigo)
         {

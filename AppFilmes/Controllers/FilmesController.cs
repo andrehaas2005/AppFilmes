@@ -48,7 +48,7 @@ namespace AppFilmes.Controllers
             #region .: Criando Generos :.
             try
             {
-                var generos = new GeneroDAL();
+                var generos = new GeneroRepository();
 
                 var lstgenerostmDb = tmDbClient.GetMovieGenres("pt");
 
@@ -59,7 +59,8 @@ namespace AppFilmes.Controllers
                         CodigoGenero = g.Id,
                         Nome = g.Name
                     };
-                    if ( generos.BuscaCodigo(genero.CodigoGenero) == null)
+                    var auxGenero = generos.BuscaCodigo(genero.CodigoGenero);
+                    if (auxGenero == null)
                     {
                         generos.Insert(genero);    
                     }
@@ -71,6 +72,7 @@ namespace AppFilmes.Controllers
 
                 #region .: Criando Filmes :.
 
+                
                 int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
 
                 for (int i = 1; i < paginas; i++)
@@ -94,8 +96,10 @@ namespace AppFilmes.Controllers
 
         public void InsertFilmes(SearchContainer<MovieResult> filme)
         {
-            var filmes = new List<Filme>();
-            filmes = bd.Filmes.ToList();
+   
+            var auxfilmes = new FilmeRepository();
+            var filmes = auxfilmes.ListAll();
+            
 
 
             filme.Results.ForEach(f =>
@@ -103,10 +107,12 @@ namespace AppFilmes.Controllers
             {
                 var filmenoBanco = new Filme();
 
-                if (filmes.Count > 0)
+               
+                if (filmes.Any())
                 {
                     filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
                 }
+
                 if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
                 {
 
@@ -128,9 +134,8 @@ namespace AppFilmes.Controllers
                         VoteCount = f.VoteCount
                     };
 
-                    bd.Filmes.Add(filmeAux);
-                    bd.SaveChanges();
-                    LogdeInclusao("= > Filme : " + filmeAux.Title + " - Lançado em : " + filmeAux.ReleaseDate.ToString() + " - Incluido em : " + DateTime.Now.ToString());
+                    auxfilmes.Insert(filmeAux);
+                  LogdeInclusao("= > Filme : " + filmeAux.Title + " - Lançado em : " + filmeAux.ReleaseDate.ToString() + " - Incluido em : " + DateTime.Now.ToString());
                 }
             });
         }
