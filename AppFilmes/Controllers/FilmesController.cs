@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using MySql.Data.MySqlClient;
 using AppFilmes.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
+
 
 namespace AppFilmes.Controllers
 {
@@ -120,7 +122,7 @@ namespace AppFilmes.Controllers
                     {
                         Adult = f.Adult,
                         BackdropPath = f.BackdropPath,
-                        GenreIds = f.GenreIds,
+                       // GenreIds = f.GenreIds,
                         Codigothemoviedb = f.Id,
                         OriginalLanguage = f.OriginalLanguage,
                         OriginalTitle = f.OriginalTitle,

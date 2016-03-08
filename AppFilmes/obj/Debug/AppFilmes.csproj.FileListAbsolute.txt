@@ -98,3 +98,7 @@ C:\ProjetoNet\AppFilmes\AppFilmes\bin\DotNetOpenAuth.OpenId.RelyingParty.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.csprojResolveAssemblyReference.cache
 C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.pdb
+C:\ProjetoNet\AppFilmes\AppFilmes\bin\EntityFramework.SqlServer.dll
+C:\ProjetoNet\AppFilmes\AppFilmes\bin\MySql.Data.dll
+C:\ProjetoNet\AppFilmes\AppFilmes\bin\MySql.Data.Entity.EF6.dll
+C:\ProjetoNet\AppFilmes\AppFilmes\bin\EntityFramework.SqlServer.xml

@@ -25,17 +25,17 @@
                         
                             <li role="presentation" class="active">
 
-                                @Html.ActionLink(" Home", "Index", "Home", new { @class = "glyphicon glyphicon-star" })
+                                @Html.ActionLink(" Home", "Index", "Home",null, new { @class = "glyphicon glyphicon-star" })
 
                             </li>
                         
-                        <li role="presentation">@Html.ActionLink(" Lista de Filmes", "Index", "Filmes", new { @class = "glyphicon glyphicon-list" })</li>
+                        <li role="presentation">@Html.ActionLink(" Lista de Filmes", "Index", "Filmes",null, new { @class = "glyphicon glyphicon-list" })</li>
                         <li role="presentation">
 
-                            @Html.ActionLink(" Cria Base Filmes", "IniciandoBase", "Filmes", new { @class = "glyphicon glyphicon-wrench" })
+                            @Html.ActionLink(" Cria Base Filmes", "IniciandoBase", "Filmes",null, new { @class = "glyphicon glyphicon-wrench" })
 
                         </li>
-                        <li role="presentation">@Html.ActionLink(" Mais Recentes", "AtualizarBase", "Filmes", new { @class = "glyphicon glyphicon-star" })</li>
+                        <li role="presentation">@Html.ActionLink(" Mais Recentes", "AtualizarBase","Filmes",null, new { @class = "glyphicon glyphicon-star" })</li>
 
                     </ul>
                 </nav>

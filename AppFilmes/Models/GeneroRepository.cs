@@ -1,17 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Objects.DataClasses;
+﻿using AppFilmes.Models.Interfaces;
 using System.Linq;
-using System.Web;
-using AppFilmes.Models.Interfaces;
 
 namespace AppFilmes.Models
 {
-    public class GeneroRepository : RepositoryBase<Genero>,IGenero
+    public class GeneroRepository : RepositoryBase<Genero>, IGenero
     {
         public Genero BuscaCodigo(int Codigo)
         {
-            return db.Generos.FirstOrDefault(g => g.CodigoGenero == Codigo);
+            var gen = new GeneroRepository().ListAll();
+            if (gen.Any())
+            {
+                var aux = new Genero();
+                aux = gen.FirstOrDefault(g => g.CodigoGenero == Codigo);
+
+                return aux;
+
+            }
+            else
+            {
+                return null;
+            }
+            //First(g => g.CodigoGenero == Codigo);
+            //FirstOrDefault(g => g.CodigoGenero == Codigo);
         }
     }
 }
