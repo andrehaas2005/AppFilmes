@@ -95,6 +95,14 @@ namespace AppFilmes.Controllers
                 #endregion
         }
 
+        public ActionResult Detalhes(int id)
+        {
+            var filme = new FilmeRepository();
+            var model = filme.ListbyId(id);
+
+            return View(model);
+        }
+
 
         public void InsertFilmes(SearchContainer<MovieResult> filme)
         {
