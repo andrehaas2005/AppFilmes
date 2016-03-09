@@ -19,15 +19,17 @@ namespace AppFilmes.Controllers
 
         private static String chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
         private TMDbClient tmDbClient = new TMDbClient(chave);
-        private FilmeContext bd = new FilmeContext();
+        
 
         //
         // GET: /Filmes/
 
         public ActionResult Index()
         {
-            FilmeContext db = new FilmeContext();
-            var lstfilmes = db.Filmes.Take(10);
+            //FilmeContext db = new FilmeContext();
+            var repFilmes = new FilmeRepository();
+            var lstfilmes = repFilmes.ListAll().Take(10);
+                //db.Filmes.Take(10);
 
             return View(lstfilmes);
         }
