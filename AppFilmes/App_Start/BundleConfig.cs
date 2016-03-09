@@ -9,9 +9,10 @@ namespace AppFilmes
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"
-                        //,"~/Content/themes/2ColPortFolio/js/bootstrap.min.js",
-                        //"~/Content/themes/2ColPortFolio/js/jquery.js"
+                        "~/Scripts/jquery-{version}.js",
+                // "~/Content/themes/2ColPortFolio/js/bootstrap.min.js",
+                // "~/Content/themes/2ColPortFolio/js/jquery.js"
+                       "~/Scripts/bootstrap.js"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
@@ -41,8 +42,10 @@ namespace AppFilmes
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"
-                        //,"~/Content/themes/2ColPortFolio/CSS/3-col-portfolio.css",
-                        //,"~/Content/themes/2ColPortFolio/CSS/bootstrap.css"
+                // ,"~/Content/themes/2ColPortFolio/CSS/3-col-portfolio.css"
+                // ,"~/Content/themes/2ColPortFolio/CSS/bootstrap.css"
+                       , "~/Content/themes/bootstrap-themes.css"
+                       , "~/Content/themes/bootstrap.css"
                         ));
         }
     }

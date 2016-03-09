@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using System.Activities.Expressions
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,8 +33,18 @@
                         
                         <li role="presentation">@Html.ActionLink(" Lista de Filmes", "Index", "Filmes",null, new { @class = "glyphicon glyphicon-list" })</li>
                         <li role="presentation">
-
-                            @Html.ActionLink(" Cria Base Filmes", "IniciandoBase", "Filmes",null, new { @class = "glyphicon glyphicon-wrench" })
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                                    Teste <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                    <li role="presentation">
+                                        @Html.ActionLink(" Cria Base Filmes", "IniciandoBase", "Filmes", null, new { /*@role = "menuitem"*/ @class = "glyphicon glyphicon-list" })
+                                    </li>
+                                </ul>
+                                
+                            </div>
+                          
 
                         </li>
                         <li role="presentation">@Html.ActionLink(" Mais Recentes", "AtualizarBase","Filmes",null, new { @class = "glyphicon glyphicon-star" })</li>
