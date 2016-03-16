@@ -13,6 +13,7 @@ namespace AppFilmes.Models
       
         [Key]
         public int FilmeId { get; set; }
+        
         public int Codigothemoviedb { get; set; }
         public string OriginalLanguage { get; set; }
         public string OriginalTitle { get; set; }

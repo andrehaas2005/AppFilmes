@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\FilmesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ManutencaoFilmesController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -215,6 +216,7 @@
     <Compile Include="Models\Interfaces\IGenero.cs" />
     <Compile Include="Models\MySqlConfiguration.cs" />
     <Compile Include="Models\MySqlHistoryContext.cs" />
+    <Compile Include="Models\ProgressArgs.cs" />
     <Compile Include="Models\RepositoryBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1873,6 +1875,8 @@
     <None Include="Scripts\jquery-1.9.1-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1926,6 +1930,9 @@
     <Content Include="Views\Filmes\Index.cshtml" />
     <Content Include="Views\Filmes\Detalhes.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\ManutencaoFilmes\Index.cshtml" />
+    <Content Include="Views\ManutencaoFilmes\_ProgressBar.cshtml" />
+    <Content Include="Views\ManutencaoFilmes\_ProgressBarGenero.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
