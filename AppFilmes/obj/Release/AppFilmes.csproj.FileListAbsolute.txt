@@ -57,3 +57,4 @@ C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Web.Http.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Web.Http.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.xml
+C:\ProjetoNet\AppFilmes\AppFilmes\obj\Release\AppFilmes.csprojResolveAssemblyReference.cache

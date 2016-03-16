@@ -13,7 +13,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/04/2016 16:25:08</publishTime>
     </File>
     <File Include="bin/AppFilmes.dll">
-      <publishTime>03/09/2016 15:23:11</publishTime>
+      <publishTime>03/16/2016 10:48:24</publishTime>
     </File>
     <File Include="bin/DotNetOpenAuth.AspNet.dll">
       <publishTime>01/04/2016 16:25:06</publishTime>
@@ -5097,6 +5097,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/jquery-ui-1.8.20.min.js">
       <publishTime>01/04/2016 16:25:00</publishTime>
     </File>
+    <File Include="Scripts/jquery-ui.js">
+      <publishTime>03/14/2016 14:27:23</publishTime>
+    </File>
+    <File Include="Scripts/jquery-ui.min.js">
+      <publishTime>03/14/2016 14:27:23</publishTime>
+    </File>
     <File Include="Scripts/jquery.unobtrusive-ajax.js">
       <publishTime>01/04/2016 16:25:03</publishTime>
     </File>
@@ -5172,11 +5178,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Home/Index.cshtml">
       <publishTime>03/09/2016 13:19:38</publishTime>
     </File>
+    <File Include="Views/ManutencaoFilmes/Index.cshtml">
+      <publishTime>03/16/2016 10:00:44</publishTime>
+    </File>
+    <File Include="Views/ManutencaoFilmes/_ProgressBar.cshtml">
+      <publishTime>03/16/2016 10:01:37</publishTime>
+    </File>
+    <File Include="Views/ManutencaoFilmes/_ProgressBarGenero.cshtml">
+      <publishTime>03/16/2016 10:01:31</publishTime>
+    </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>01/04/2016 16:24:51</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>03/09/2016 14:18:13</publishTime>
+      <publishTime>03/14/2016 16:32:27</publishTime>
     </File>
     <File Include="Views/Shared/_LoginPartial.cshtml">
       <publishTime>01/04/2016 16:24:51</publishTime>

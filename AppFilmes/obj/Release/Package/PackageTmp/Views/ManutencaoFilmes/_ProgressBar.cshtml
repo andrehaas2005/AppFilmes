@@ -1,27 +1,26 @@
 ﻿<script type="text/javascript">
-    function atualizarDefinicaoGenero() {
+    function atualizarDefinicao() {
         $.ajax({
             type: 'GET',
-            url: '/ManutencaoFilmes/progressBarGenero',
+            url: '/ManutencaoFilmes/progressBarFilmes',
             dataType: 'html',
             cache: false,
             async: true,
             success: function (data) {
-                $('#barragenero').html(data);
+                $('#barra').html(data);
             }
         });
     }
     $(document).ready(function () {
-        setInterval(atualizarDefinicaoGenero, 1000);
+        setInterval(atualizarDefinicao, 300);
     });
 </script>
 
-<form>
+<form id="form1">
     <div id="result" style="font-family: Tahoma;font-size: 1.4em;color: darkgray;margin-top: 80px;padding-bottom: 5px">
-        Iniciliazando e Preparando Base Genero....
+        Iniciliazando e Preparando Base Filmes....
     </div>
-    
-    <div id="barragenero">
+    <div id="barra">
 
     </div>
 

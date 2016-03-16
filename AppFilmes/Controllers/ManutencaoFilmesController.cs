@@ -17,33 +17,48 @@ namespace AppFilmes.Controllers
 {
 
 
-    public class ManutencaoFilmesController : Controller
+    public class ManutencaoFilmesController : AsyncController
     {
         private static String chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
         private TMDbClient tmDbClient = new TMDbClient(chave);
-        public int _percent { get; set; }
 
+        private int _qtdaFilmeLidos;
+        private int _qtdaGeneroLidos;
 
-
-
+        public int qtdaFilmeLidos { get { return _qtdaFilmeLidos; } set { _qtdaFilmeLidos = value; } }
+        public int qtdaGeneroLidos { get { return _qtdaGeneroLidos; } set { _qtdaGeneroLidos = value; } }
         public ActionResult Index()
         {
+            var auxfilmes = new FilmeRepository();
+            var generos = new GeneroRepository();
+            var lstgenerostmDb = tmDbClient.GetMovieGenres("pt");
+            var lstFilmetmDb = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0);
+            var lstGenero = generos.ListAll();
+            var lstFilmes = auxfilmes.ListAll();
+
+            var percentGenero = Math.Round(((Double)(lstGenero.Count() * 100) / lstgenerostmDb.Count), 2);
+            var _percent = Math.Round(((Double)(lstFilmes.Count() * 100) / lstFilmetmDb.TotalResults), 2);
+            //Math.Round(((Double) (lstFilmes.Count() * 100) / lstFilmetmDb.TotalResults),2)
+            Session.Add("percent", _percent);
+            Session.Add("percentGenero", percentGenero);
+
             return View();
         }
-        [System.Web.Services.WebMethod]
-        public void IniciandoBase()
+
+        public void IniciandoBaseCompleted()
         {
+            
+        }
+
+        [NoAsyncTimeout]
+        public void IniciandoBaseAsync()
+        {
+            AsyncManager.OutstandingOperations.Increment();
+           
 
 
-            //List<Genero> lstgeneros = new List<Genero>();
-            //List<Filme> filmes = new List<Filme>();
-            var chave = WebConfigurationManager.AppSettings["chaveAcesso"].ToString();
-            var tmDbClient = new TMDbClient(chave);
             var lstFilmes = new List<SearchContainer<MovieResult>>();
 
-
-
-            // var bd = new FilmeContext();
             #region .: Criando Generos :.
             try
             {
@@ -51,33 +66,40 @@ namespace AppFilmes.Controllers
 
                 var lstgenerostmDb = tmDbClient.GetMovieGenres("pt");
 
-                lstgenerostmDb.ForEach(g =>
+                var qtdaBancoGenero = generos.ListAll().Count();
+
+                if (qtdaBancoGenero < lstgenerostmDb.Count)
                 {
-                    var percentGenero = (generos.ListAll().Count()*100)/lstgenerostmDb.Count;
 
-                    Session.Add("percentGenero",percentGenero);
 
-                    var genero = new Genero()
+                    lstgenerostmDb.ForEach(g =>
                     {
-                        CodigoGenero = g.Id,
-                        Nome = g.Name
-                    };
-                    var auxGenero = generos.BuscaCodigo(genero.CodigoGenero);
-                    if (auxGenero == null)
-                    {
-                        generos.Insert(genero);
-                    }
+                        this.qtdaGeneroLidos++;
+                        Session["percentGenero"] = Math.Round(((Double)(generos.ListAll().Count() * 100) / lstgenerostmDb.Count), 2);
 
-                });
+
+                        var genero = new Genero()
+                        {
+                            CodigoGenero = g.Id,
+                            Nome = g.Name
+                        };
+                        var auxGenero = generos.BuscaCodigo(genero.CodigoGenero);
+                        if (auxGenero == null)
+                        {
+                            generos.Insert(genero);
+                        }
+
+                    });
+                }
+                else
+                {
+                    this.qtdaGeneroLidos = qtdaBancoGenero;
+                }
 
 
             #endregion
 
                 #region .: Criando Filmes :.
-
-                ProgressArgs result = new ProgressArgs();
-                result.Completed = 0;
-                result.Total = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalResults;
 
                 int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
 
@@ -89,7 +111,7 @@ namespace AppFilmes.Controllers
                     InsertFilmes(filme);
 
                 }
-
+                AsyncManager.OutstandingOperations.Decrement();
 
             }
             catch (Exception)
@@ -105,17 +127,19 @@ namespace AppFilmes.Controllers
         {
 
             var auxfilmes = new FilmeRepository();
-
-
+            var atualizaLista = false;
+            var filmes = auxfilmes.ListAll();
 
             filme.Results.ForEach(f =>
             {
+                this.qtdaFilmeLidos++;
                 var filmenoBanco = new Filme();
-                var filmes = auxfilmes.ListAll();
-                filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
+                if (atualizaLista)
+                    filmes = auxfilmes.ListAll();
 
-                _percent = (filmes.Count() * 100) / filme.TotalResults;
-                Session.Add("percent", _percent);
+                Session["percent"] = Math.Round(((Double)(filmes.Count() * 100) / filme.TotalResults), 2);
+
+                filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
 
 
                 if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
@@ -139,43 +163,44 @@ namespace AppFilmes.Controllers
                     };
 
                     auxfilmes.Insert(filmeAux);
-
+                    atualizaLista = true;
 
                 }
             });
         }
-
+   
         public string progressBarFilmes()
         {
+
+
             if (Session["percent"] == null)
                 Session["percent"] = "0";
+            string html = "<div>Registros Lidos: " + this.qtdaFilmeLidos + "</div>";
 
-            string html = "<div class=\"progress\">";
+            html += "<div class=\"progress\">";
 
             html +=
                 "<div class=\"progress-bar progress-bar-striped active\" id=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"2\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"min-width: 2em; width: " +
-                Session["percent"].ToString() + "%\">";
+                Session["percent"].ToString().Replace(',', '.') + "%\">";
             html += Session["percent"].ToString() + "%</div>";
             html += "</div>";
             return html;
         }
-
-
+      
         public string progressBarGenero()
         {
             if (Session["percentGenero"] == null)
                 Session["percentGenero"] = "0";
-
-            string html = "<div class=\"progress\">";
+            string html = "<div>Registros Lidos: " + this.qtdaGeneroLidos + "</div>";
+            html += "<div class=\"progress\">";
 
             html +=
                 "<div class=\"progress-bar progress-bar-success progress-bar-striped\" id=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"2\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"min-width: 2em; width: " +
-                Session["percentGenero"].ToString() + "%\">";
+                Session["percentGenero"].ToString().Replace(',', '.') + "%\">";
             html += Session["percentGenero"].ToString() + "%</div>";
             html += "</div>";
             return html;
         }
-
 
         public void AtualizarBase()
         {
