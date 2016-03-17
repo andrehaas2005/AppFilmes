@@ -1,0 +1,28 @@
+﻿<script type="text/javascript">
+    function atualizarDefinicaoGenero() {
+        $.ajax({
+            type: 'GET',
+            url: '/ManutencaoFilmes/progressBarGenero',
+            dataType: 'html',
+            cache: false,
+            async: true,
+            success: function (data) {
+                $('#barragenero').html(data);
+            }
+        });
+    }
+    $(document).ready(function () {
+        setInterval(atualizarDefinicaoGenero, 1000);
+    });
+</script>
+
+<form>
+    <div id="result" style="font-family: Tahoma;font-size: 1.4em;color: darkgray;margin-top: 80px;padding-bottom: 5px">
+        Iniciliazando e Preparando Base Genero....
+    </div>
+    
+    <div id="barragenero">
+
+    </div>
+
+</form>

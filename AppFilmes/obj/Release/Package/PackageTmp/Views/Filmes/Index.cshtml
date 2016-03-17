@@ -1,0 +1,143 @@
+﻿@model IEnumerable<AppFilmes.Models.Filme>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+@*<link href="~/Content/themes/2ColPortFolio/CSS/bootstrap.min.css" rel="stylesheet" />*@
+
+<h2>Filmes</h2>
+
+<div>
+    <!-- Page Header -->
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                Page Heading
+                <small>Secondary Text</small>
+            </h1>
+        </div>
+    </div>
+    <!-- /.row -->
+    <!-- Projects Row -->
+    <div class="row">
+        @foreach (var item in Model)
+        {
+
+
+
+
+            <div class="col-sm-6 col-md-4" style="height: 630px;">
+                <div class=" thumbnail">
+                    <img src="http://image.tmdb.org/t/p/w500/@Html.DisplayFor(modelItem => item.PosterPath) " alt="..." class="img-thumbnail" style="height: 425px;">
+                    <div class="caption">
+                        <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
+                        <p>...</p>
+                        <p>@Html.ActionLink("Detalhes", "Detalhes", new { id = item.FilmeId }, new { @class = "btn btn-primary",@role="button" })
+                        <a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+                    </div>
+                </div>
+            </div>
+
+
+            @*<div class="col-md-2 portfolio-item">
+                    <a href="#">
+                        <img class="img-responsive" src="http://image.tmdb.org/t/p/w500/@Html.DisplayFor(modelItem => item.PosterPath) " alt="">
+
+                        <h3>
+                            <a href="#">@Html.DisplayFor(modelItem => item.Title)</a>
+                        </h3>
+                        @{
+                            string texto = string.Empty;
+                            if (texto.Length > 100)
+                            {
+                                texto = item.Overview.Substring(0, 100);
+                            }
+                            else
+                            {
+                                texto = item.Overview;
+                            }
+                        }
+                        <p>@texto</p>
+                    </a>
+                </div>*@
+
+        }
+    </div>
+    <!-- /.row -->
+    <!-- Projects Row -->
+    @*@foreach (var item in Model)
+            {
+
+                <div class="col-md-4 portfolio-item">
+                    <div style="height: 600px;">
+                        <a href=" #" class="">
+                            <img src="http://image.tmdb.org/t/p/w500/@Html.DisplayFor(modelItem => item.PosterPath) " alt="" style="width: 150px;height: 225px;">
+
+
+                            <h3>
+                                <a href="#">@Html.DisplayFor(modelItem => item.Title)</a>
+                            </h3>
+                            @Html.DisplayFor(modelItem => item.Overview)
+
+                        </a>
+                    </div>
+                </div>
+
+
+            }
+        </div>
+
+    *@
+    <!-- Pagination -->
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <ul class="pagination">
+                <li>
+                    <a href="#">&laquo;</a>
+                </li>
+                <li class="active">
+                    <a href="#">1</a>
+                </li>
+                <li>
+                    <a href="#">2</a>
+                </li>
+                <li>
+                    <a href="#">3</a>
+                </li>
+                <li>
+                    <a href="#">4</a>
+                </li>
+                <li>
+                    <a href="#">5</a>
+                </li>
+                <li>
+                    <a href="#">&raquo;</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- /.row -->
+
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="row">
+            <div class="col-lg-12">
+                <p>Copyright &copy; Your Website 2016</p>
+            </div>
+        </div>
+        <!-- /.row -->
+    </footer>
+
+</div>
+
+<script src="~/Content/themes/2ColPortFolio/js/jquery.js"></script>
+<script src="~/Content/themes/2ColPortFolio/js/bootstrap.min.js"></script>
+

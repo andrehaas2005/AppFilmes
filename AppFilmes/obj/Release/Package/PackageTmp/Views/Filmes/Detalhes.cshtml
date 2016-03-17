@@ -1,0 +1,109 @@
+﻿@model AppFilmes.Models.Filme
+
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<h2>Detalhes</h2>
+
+<fieldset>
+    <legend>Filme</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Adult)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Adult)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BackdropPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BackdropPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Codigothemoviedb)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Codigothemoviedb)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OriginalLanguage)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OriginalLanguage)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.OriginalTitle)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.OriginalTitle)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Overview)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Overview)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Popularity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Popularity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PosterPath)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PosterPath)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ReleaseDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReleaseDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Video)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Video)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.VoteAverage)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.VoteAverage)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.VoteCount)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.VoteCount)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.FilmeId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
