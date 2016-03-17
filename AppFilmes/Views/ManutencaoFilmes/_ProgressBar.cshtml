@@ -1,0 +1,28 @@
+﻿<script type="text/javascript">
+    function atualizarDefinicao() {
+        $.ajax({
+            type: 'GET',
+            url: '/ManutencaoFilmes/progressBarFilmes',
+            dataType: 'html',
+            cache: false,
+            async: true,
+            success: function (data) {
+                $('#barra').html(data);
+            }
+        });
+        
+    }
+    $(document).ready(function () {
+        setInterval(atualizarDefinicao, 1000);
+    });
+</script>
+
+<form id="form1">
+    <div id="result" style="font-family: Tahoma;font-size: 1.4em;color: darkgray;margin-top: 80px;padding-bottom: 5px">
+        Iniciliazando e Preparando Base Filmes....
+    </div>
+    <div id="barra">
+
+    </div>
+
+</form>

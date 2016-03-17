@@ -14,9 +14,10 @@ namespace AppFilmes.Controllers
     {
         public ActionResult Index()
         {
-
-
-            #region .: Documentação :.
+         
+            
+            
+          #region .: Documentação :.
             //Api Key =  8fb08dee4651c3d9b1536a69ea3f3d16
             //URL para Obter Genre = http://api.themoviedb.org/3/genre/tv/lis
             //URL completa do exemplo = http://api.themoviedb.org/3/genre/tv/list?api_key=8fb08dee4651c3d9b1536a69ea3f3d16
