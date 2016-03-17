@@ -41,6 +41,8 @@ namespace AppFilmes.Controllers
             //Math.Round(((Double) (lstFilmes.Count() * 100) / lstFilmetmDb.TotalResults),2)
             Session.Add("percent", _percent);
             Session.Add("percentGenero", percentGenero);
+            Session.Add("qtdaFilmeLidos", qtdaFilmeLidos);
+            Session.Add("qtdaGeneroLidos", qtdaGeneroLidos);
 
             return View();
         }
@@ -74,7 +76,7 @@ namespace AppFilmes.Controllers
 
                     lstgenerostmDb.ForEach(g =>
                     {
-                        this.qtdaGeneroLidos++;
+                      Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos++;
                         Session["percentGenero"] = Math.Round(((Double)(generos.ListAll().Count() * 100) / lstgenerostmDb.Count), 2);
 
 
@@ -93,7 +95,8 @@ namespace AppFilmes.Controllers
                 }
                 else
                 {
-                    this.qtdaGeneroLidos = qtdaBancoGenero;
+
+                   Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos = qtdaBancoGenero;
                 }
 
 
@@ -132,7 +135,8 @@ namespace AppFilmes.Controllers
 
             filme.Results.ForEach(f =>
             {
-                this.qtdaFilmeLidos++;
+             
+                Session["qtdaFilmeLidos"] = this.qtdaFilmeLidos++;
                 var filmenoBanco = new Filme();
                 if (atualizaLista)
                     filmes = auxfilmes.ListAll();
@@ -175,7 +179,7 @@ namespace AppFilmes.Controllers
 
             if (Session["percent"] == null)
                 Session["percent"] = "0";
-            string html = "<div>Registros Lidos: " + this.qtdaFilmeLidos + "</div>";
+            string html = "<div>Registros Lidos: " + Session["qtdaFilmeLidos"] + "</div>";
 
             html += "<div class=\"progress\">";
 
@@ -191,7 +195,7 @@ namespace AppFilmes.Controllers
         {
             if (Session["percentGenero"] == null)
                 Session["percentGenero"] = "0";
-            string html = "<div>Registros Lidos: " + this.qtdaGeneroLidos + "</div>";
+            string html = "<div>Registros Lidos: " + Session["qtdaGeneroLidos"] + "</div>";
             html += "<div class=\"progress\">";
 
             html +=
