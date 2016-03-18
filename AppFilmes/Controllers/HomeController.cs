@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
+using WebGrease.Css.Extensions;
 
 namespace AppFilmes.Controllers
 {
@@ -14,10 +15,7 @@ namespace AppFilmes.Controllers
     {
         public ActionResult Index()
         {
-         
-            
-            
-          #region .: Documentação :.
+            #region .: Documentação :.
             //Api Key =  8fb08dee4651c3d9b1536a69ea3f3d16
             //URL para Obter Genre = http://api.themoviedb.org/3/genre/tv/lis
             //URL completa do exemplo = http://api.themoviedb.org/3/genre/tv/list?api_key=8fb08dee4651c3d9b1536a69ea3f3d16
@@ -63,6 +61,26 @@ namespace AppFilmes.Controllers
             //            }
 
             #endregion
+
+            var carosselRepository = new FilmeRepository();
+
+            var lstcarossel = carosselRepository.ListAll();
+            int p = 0;
+            var filmes = lstcarossel as IList<Filme> ?? lstcarossel.ToList();
+            foreach (var source in filmes.Where(x => x.ReleaseDate > DateTime.Now.AddDays(-30) & !String.IsNullOrEmpty(x.BackdropPath) & x.ReleaseDate < DateTime.Now.AddDays(1)).OrderByDescending(y => y.Popularity).Take(3))
+            {
+                ViewData.Add("Car" + p, source.BackdropPath);
+                ViewData.Add("Des" + p, source.Title);
+                p++;
+            }
+
+
+            var lancamento =
+                filmes.Where(lan => lan.ReleaseDate > DateTime.Now && lan.ReleaseDate < DateTime.Now.AddDays(7))
+                    .ToList();
+
+
+
             var baseAddress = new Uri("http://api.themoviedb.org/3/");
 
 
@@ -70,7 +88,7 @@ namespace AppFilmes.Controllers
 
 
 
-            return View();
+            return View(lancamento);
         }
 
         public ActionResult About()

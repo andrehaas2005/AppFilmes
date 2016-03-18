@@ -1,17 +1,13 @@
-﻿using System;
+﻿using AppFilmes.Models;
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Threading;
-using System.Web;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using AppFilmes.Models;
-using Microsoft.Ajax.Utilities;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
+using TMDbLib.Objects.TvShows;
 
 namespace AppFilmes.Controllers
 {
@@ -47,19 +43,20 @@ namespace AppFilmes.Controllers
             return View();
         }
 
-        public void IniciandoBaseCompleted()
+        public ActionResult IniciandoBaseCompleted()
         {
-            
+            return View("Index");
         }
 
         [NoAsyncTimeout]
         public void IniciandoBaseAsync()
         {
             AsyncManager.OutstandingOperations.Increment();
-           
 
+            var listFilmeContainers = new List<SearchContainer<MovieResult>>();
 
-            var lstFilmes = new List<SearchContainer<MovieResult>>();
+            var filmesRepository = new FilmeRepository();
+            var lstFilmesNoBanco = filmesRepository.ListAll();
 
             #region .: Criando Generos :.
             try
@@ -76,7 +73,7 @@ namespace AppFilmes.Controllers
 
                     lstgenerostmDb.ForEach(g =>
                     {
-                      Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos++;
+                        Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos++;
                         Session["percentGenero"] = Math.Round(((Double)(generos.ListAll().Count() * 100) / lstgenerostmDb.Count), 2);
 
 
@@ -96,7 +93,7 @@ namespace AppFilmes.Controllers
                 else
                 {
 
-                   Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos = qtdaBancoGenero;
+                    Session["qtdaGeneroLidos"] = this.qtdaGeneroLidos = qtdaBancoGenero;
                 }
 
 
@@ -104,85 +101,80 @@ namespace AppFilmes.Controllers
 
                 #region .: Criando Filmes :.
 
-                int paginas = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0).TotalPages;
-
-                for (int i = 1; i < paginas; i++)
+                var tbmDbFilme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0);
+                if (tbmDbFilme.TotalResults > lstFilmesNoBanco.Count())
                 {
-                    var filme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", i);
-
-
-                    InsertFilmes(filme);
-
+                    for (int i = 0; i < tbmDbFilme.TotalPages; i++)
+                    {
+                        listFilmeContainers.Add(tmDbClient.GetMovieList(MovieListType.Popular, "pt", i));
+                    }
+                    InsertFilmes(listFilmeContainers);
                 }
+
                 AsyncManager.OutstandingOperations.Decrement();
 
             }
             catch (Exception)
             {
-
+                
             }
                 #endregion
         }
 
 
 
-        public void InsertFilmes(SearchContainer<MovieResult> filme)
+        public void InsertFilmes(List<SearchContainer<MovieResult>> filmeSearchContainers)
         {
 
             var auxfilmes = new FilmeRepository();
-            var atualizaLista = false;
             var filmes = auxfilmes.ListAll();
 
-            filme.Results.ForEach(f =>
+            filmeSearchContainers.ForEach(filme =>
             {
-             
-                Session["qtdaFilmeLidos"] = this.qtdaFilmeLidos++;
-                var filmenoBanco = new Filme();
-                if (atualizaLista)
-                    filmes = auxfilmes.ListAll();
-
-                Session["percent"] = Math.Round(((Double)(filmes.Count() * 100) / filme.TotalResults), 2);
-
-                filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
-
-
-                if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
+                filme.Results.ForEach(f =>
                 {
-                    var filmeAux = new Filme()
+
+                    Session["qtdaFilmeLidos"] = this.qtdaFilmeLidos++;
+                    var filmenoBanco = new Filme();
+                    Session["percent"] = Math.Round(((Double)(filmes.Count() * 100) / filme.TotalResults), 2);
+                    filmenoBanco = filmes.FirstOrDefault(fbd => fbd.Codigothemoviedb == f.Id);
+
+
+                    if (filmenoBanco == null || filmenoBanco.Codigothemoviedb == 0)
                     {
-                        Adult = f.Adult,
-                        BackdropPath = f.BackdropPath,
-                        // GenreIds = f.GenreIds,
-                        Codigothemoviedb = f.Id,
-                        OriginalLanguage = f.OriginalLanguage,
-                        OriginalTitle = f.OriginalTitle,
-                        Overview = f.Overview,
-                        Popularity = f.Popularity,
-                        PosterPath = f.PosterPath,
-                        ReleaseDate = f.ReleaseDate,
-                        Title = f.Title,
-                        Video = f.Video,
-                        VoteAverage = f.VoteAverage,
-                        VoteCount = f.VoteCount
-                    };
+                        var filmeAux = new Filme()
+                        {
+                            Adult = f.Adult,
+                            BackdropPath = f.BackdropPath,
+                            // GenreIds = f.GenreIds,
+                            Codigothemoviedb = f.Id,
+                            OriginalLanguage = f.OriginalLanguage,
+                            OriginalTitle = f.OriginalTitle,
+                            Overview = f.Overview,
+                            Popularity = f.Popularity,
+                            PosterPath = f.PosterPath,
+                            ReleaseDate = f.ReleaseDate,
+                            Title = f.Title,
+                            Video = f.Video,
+                            VoteAverage = f.VoteAverage,
+                            VoteCount = f.VoteCount
+                        };
 
-                    auxfilmes.Insert(filmeAux);
-                    atualizaLista = true;
-
-                }
+                        auxfilmes.Insert(filmeAux);
+                    }
+                });
             });
+
+
+
         }
-   
+
         public string progressBarFilmes()
         {
-
-
             if (Session["percent"] == null)
                 Session["percent"] = "0";
             string html = "<div>Registros Lidos: " + Session["qtdaFilmeLidos"] + "</div>";
-
             html += "<div class=\"progress\">";
-
             html +=
                 "<div class=\"progress-bar progress-bar-striped active\" id=\"progress-bar\" role=\"progressbar\" aria-valuenow=\"2\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"min-width: 2em; width: " +
                 Session["percent"].ToString().Replace(',', '.') + "%\">";
@@ -190,7 +182,7 @@ namespace AppFilmes.Controllers
             html += "</div>";
             return html;
         }
-      
+
         public string progressBarGenero()
         {
             if (Session["percentGenero"] == null)
@@ -206,18 +198,12 @@ namespace AppFilmes.Controllers
             return html;
         }
 
-        public void AtualizarBase()
+
+        public void Serie()
         {
-            var qtdaDePaginas = tmDbClient.GetMovieList(MovieListType.Upcoming, "pt").TotalPages;
-            for (int i = 1; i < qtdaDePaginas; i++)
-            {
-                var filmesLancado = tmDbClient.GetMovieList(MovieListType.Upcoming, "pt", i);
-                InsertFilmes(filmesLancado);
-            }
+            var teste = tmDbClient.GetChangesTv();
 
         }
-
-
 
     }
 }
