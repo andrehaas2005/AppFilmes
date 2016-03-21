@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 2.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/2.5/template-install.dtd">
+<install version="2.5" type="template" method="upgrade">
+	<name>Regioes Escoteiras</name>
+	<creationDate>05 march 2012</creationDate>
+	<author>Squee Design</author>
+	<authorEmail>contato@squee.com.br</authorEmail>
+	<authorUrl>http://www.squee.com.br</authorUrl>
+	<copyright>Copyright (C) 2012 Open Source Matters, Inc. All rights reserved.</copyright>
+	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
+	<version>1.0</version>
+	<description>Template padrao para sites de Regioes Escoteiras</description>
+	<description><![CDATA[
+		<h1>scout</h1>
+		<p><img src="../templates/scouts/template_preview.png" /></p>
+		<h2>Module positions</h2>
+		<ol>
+			<li>header</li>
+			<li>menu</li>
+			<li>footer</li>
+			<li>debug</li>
+		</ol>
+		<p>Created by <a href="http://www.squee.com.br" target="_blank">Squee | squee.com.br</a>.</p>
+	]]></description>
+	
+	<files>
+		<folder>css</folder>
+		<folder>html</folder>
+		<folder>images</folder>
+		<folder>js</folder>
+		<filename>component.php</filename>
+		<filename>error.php</filename>
+		<filename>favicon.ico</filename>
+		<filename>index.php</filename>
+		<filename>offline.php</filename>
+		<filename>template_preview.png</filename>
+		<filename>template_thumbnail.png</filename>
+		<filename>templateDetails.xml</filename>
+	</files>
+	
+	<languages folder="language">
+		<language tag="de-DE">de-DE.tpl_scouts.ini</language>
+		<language tag="en-GB">en-GB.tpl_scouts.ini</language>
+	</languages>
+	
+	<positions>
+		<position>header</position>
+		<position>menu</position>
+		<position>footer</position>
+		<position>debug</position>
+	</positions>
+	
+	<config>
+		<fields name="params">
+			<fieldset name="advanced">
+				<field name="FIELD_SPACER_HEADER_DESC" type="spacer" hr="false" />
+			</fieldset>
+		</fields>
+	</config>
+</install>
