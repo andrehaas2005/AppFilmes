@@ -209,10 +209,16 @@
     <Compile Include="Models\Filme.cs" />
     <Compile Include="Models\Filme_Genero.cs" />
     <Compile Include="Models\FilmeRepository.cs" />
+    <Compile Include="Models\Foto_Backdrops.cs" />
+    <Compile Include="Models\Foto_BackdropsRepository.cs" />
+    <Compile Include="Models\Foto_Posters.cs" />
+    <Compile Include="Models\Foto_PostersRepository.cs" />
     <Compile Include="Models\Genero.cs" />
     <Compile Include="Models\GeneroRepository.cs" />
     <Compile Include="Models\Interfaces\IDados.cs" />
     <Compile Include="Models\Interfaces\IFilme.cs" />
+    <Compile Include="Models\Interfaces\IFoto_Backdrops.cs" />
+    <Compile Include="Models\Interfaces\IFoto_Posters.cs" />
     <Compile Include="Models\Interfaces\IGenero.cs" />
     <Compile Include="Models\MySqlConfiguration.cs" />
     <Compile Include="Models\MySqlHistoryContext.cs" />
@@ -1934,6 +1940,7 @@
     <Content Include="Views\ManutencaoFilmes\Index.cshtml" />
     <Content Include="Views\ManutencaoFilmes\_ProgressBar.cshtml" />
     <Content Include="Views\ManutencaoFilmes\_ProgressBarGenero.cshtml" />
+    <Content Include="Views\Filmes\_CarosselFotoFilmes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

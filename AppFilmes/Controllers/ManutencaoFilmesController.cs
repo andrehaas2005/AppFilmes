@@ -8,6 +8,7 @@ using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.TvShows;
+using WebGrease.Css.Extensions;
 
 namespace AppFilmes.Controllers
 {
@@ -123,6 +124,69 @@ namespace AppFilmes.Controllers
 
 
 
+        public void IniciaBaseFotos()
+        {
+            var lstFilmeRepository =new FilmeRepository();
+            var lstFotosPosters = new List<Foto_Posters>();
+            var lstFotoBackdrops = new List<Foto_Backdrops>();
+            var FotoBRepository = new Foto_BackdropsRepository();
+            var FotoPRepository = new Foto_PostersRepository();
+           
+            lstFotosPosters = (List<Foto_Posters>) FotoPRepository.ListAll();
+            lstFotoBackdrops = (List<Foto_Backdrops>) FotoBRepository.ListAll();
+
+            var lstFilmes = lstFilmeRepository.ListAll();
+            lstFilmes.ForEach(f =>
+            {
+              var fotoFilme =   tmDbClient.GetMovieImages(f.Codigothemoviedb);
+                fotoFilme.Backdrops.ForEach(fb =>
+                {
+                    if (!lstFotoBackdrops.Any(x => x.FilePath.Equals(fb.FilePath)))
+                    {
+                        var clsFotoBackdrops = new Foto_Backdrops()
+                        {
+                            Codigothemoviedb = f.Codigothemoviedb,
+                            AspectRatio = fb.AspectRatio,
+                            FilePath = fb.FilePath,
+                            Height = fb.Height,
+                            Iso_639_1 = fb.Iso_639_1,
+                            VoteAverage = fb.VoteAverage,
+                            VoteCount = fb.VoteCount,
+                            Width = fb.Width,
+                            FilmeId = f.FilmeId,
+                            
+                        };
+
+                        FotoBRepository.Insert(clsFotoBackdrops);
+                        
+                    }
+                });
+
+                fotoFilme.Posters.ForEach(fp =>
+                {
+
+                    if (!lstFotosPosters.Any(y => y.FilePath.Equals(fp.FilePath)))
+                    {
+                        var clsFotoPosters = new Foto_Posters()
+                        {
+                            Codigothemoviedb = f.Codigothemoviedb,
+                            AspectRatio = fp.AspectRatio,
+                            FilePath = fp.FilePath,
+                            Height = fp.Height,
+                            Iso_639_1 = fp.Iso_639_1,
+                            VoteAverage = fp.VoteAverage,
+                            VoteCount = fp.VoteCount,
+                            Width = fp.Width,
+                            FilmeId = f.FilmeId,   
+                        };
+                        FotoPRepository.Insert(clsFotoPosters);
+                    }
+                });
+
+            });
+        }
+
+
         public void InsertFilmes(List<SearchContainer<MovieResult>> filmeSearchContainers)
         {
 
@@ -198,6 +262,8 @@ namespace AppFilmes.Controllers
             return html;
         }
 
+
+ 
 
         public void Serie()
         {
