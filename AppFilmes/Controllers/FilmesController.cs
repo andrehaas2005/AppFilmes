@@ -47,6 +47,7 @@ namespace AppFilmes.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public string strCarrossel(int id)
         {
             var FotoPostersRepository = new Foto_PostersRepository();
@@ -64,26 +65,37 @@ namespace AppFilmes.Controllers
                     strTemplateControle.Append("<li data-target=\"#carousel-foto-generic\" data-slide-to=\"0\" class=\"active\"></li>");
 
                     strCarrossel += "<div class=\"item active\">";
-                    strCarrossel += "<img src=\"http://image.tmdb.org/t/p/w500/\"" + t.FilePath + "alt=\"...\">";
+                    strCarrossel += "<img src=\"http://image.tmdb.org/t/p/w500/" + t.FilePath + " alt=\"...\">";
                     strCarrossel += "<div class=\"carousel-caption\">";
                     strCarrossel += "   ... ";
                     strCarrossel += "</div>";
                     strCarrossel += "</div>";
+                    i++;
                 }
                 else
                 {
-                    strTemplateControle.Append("<li data-target=\"#carousel-foto-generic\" data-slide-to='" + i + "' class=\"active\"></li>");
+                    strTemplateControle.Append("<li data-target=\"#carousel-foto-generic\" data-slide-to='" + i + "'></li>");
                     strCarrossel += "<div class=\"item\">";
-                    strCarrossel += "<img src=\"http://image.tmdb.org/t/p/w500/\"" + t.FilePath + "alt=\"...\">";
+                    strCarrossel += "<img src=\"http://image.tmdb.org/t/p/w500/" + t.FilePath + " alt=\"...\">";
                     strCarrossel += "      <div class=\"carousel-caption\">";
                     strCarrossel += "...";
                     strCarrossel += "</div>";
                     strCarrossel += "</div>";
+                    i++;
                 }
             });
             strTemplateControle.Append("</ol>");
             strCarrossel += "</div>";
             strTemplateControle.Append(strCarrossel);
+            strTemplateControle.Append("<a class=\"left carousel-control\" href=\"#carousel-foto-generic\" role=\"button\" data-slide=\"prev\">");
+            strTemplateControle.Append("<span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>");
+            strTemplateControle.Append("<span class=\"sr-only\">Previous</span>");
+            strTemplateControle.Append("</a>");
+            strTemplateControle.Append("<a class=\"right carousel-control\" href=\"#carousel-foto-generic\" role=\"button\" data-slide=\"next\">");
+            strTemplateControle.Append("<span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>");
+            strTemplateControle.Append("<span class=\"sr-only\">Next</span>");
+            strTemplateControle.Append("</a>");
+
 
             return strTemplateControle.ToString();
         }
