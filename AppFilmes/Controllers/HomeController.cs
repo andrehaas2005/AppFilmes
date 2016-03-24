@@ -8,11 +8,13 @@ using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Movies;
 using WebGrease.Css.Extensions;
+using System.Web.Caching;
 
 namespace AppFilmes.Controllers
 {
     public class HomeController : Controller
     {
+        [OutputCache(Duration = 120)]
         public ActionResult Index()
         {
             #region .: Documentação :.
@@ -62,11 +64,27 @@ namespace AppFilmes.Controllers
 
             #endregion
 
-            var carosselRepository = new FilmeRepository();
-
-            var lstcarossel = carosselRepository.ListAll();
+            IEnumerable<Filme> filmes = null;
             int p = 0;
-            var filmes = lstcarossel as IList<Filme> ?? lstcarossel.ToList();
+            if (HttpContext.Cache["cacheFilmes"] == null)
+            {
+                var carosselRepository = new FilmeRepository();
+
+                var lstcarossel = carosselRepository.ListAll();
+
+                filmes = lstcarossel as IList<Filme> ?? lstcarossel.ToList();
+                HttpContext.Cache["cacheFilmes"] = filmes;
+
+            }
+            else
+            {
+                filmes = (IEnumerable<Filme>)HttpContext.Cache["cacheFilmes"];
+            }
+
+            var lancamento =
+                 filmes.Where(lan => lan.ReleaseDate > DateTime.Now && lan.ReleaseDate < DateTime.Now.AddDays(7) && !String.IsNullOrEmpty(lan.BackdropPath))
+                     .ToList();
+
             foreach (var source in filmes.Where(x => x.ReleaseDate > DateTime.Now.AddDays(-30) & !String.IsNullOrEmpty(x.BackdropPath) & x.ReleaseDate < DateTime.Now.AddDays(1)).OrderByDescending(y => y.Popularity).Take(3))
             {
                 ViewData.Add("Car" + p, source.BackdropPath);
@@ -75,9 +93,7 @@ namespace AppFilmes.Controllers
             }
 
 
-            var lancamento =
-                filmes.Where(lan => lan.ReleaseDate > DateTime.Now && lan.ReleaseDate < DateTime.Now.AddDays(7))
-                    .ToList();
+
 
 
 

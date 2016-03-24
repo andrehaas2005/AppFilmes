@@ -112,3 +112,9 @@ C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Web.Http.WebHost.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Web.Http.xml
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\System.Web.Http.WebHost.xml
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.dll
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.dll
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.WebHost.dll
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.xml
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.xml
+D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.WebHost.xml

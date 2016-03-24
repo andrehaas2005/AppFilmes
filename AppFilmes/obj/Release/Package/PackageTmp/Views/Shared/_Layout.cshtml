@@ -3,20 +3,19 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <title>@ViewBag.Title - ALOA-HAAS®</title>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    @*<link href="~/Content/themes/2ColPortFolio/CSS/bootstrap.css" rel="stylesheet" />*@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <meta name="viewport" content="width=device-width" />
     @Styles.Render("~/Content/css")
-
     @Scripts.Render("~/bundles/modernizr")
 </head>
+
 <body>
     <header>
         <div class="content-wrapper">
             <div class="float-left">
-                <p class="site-title">@Html.ActionLink("your logo here", "Index", "Home")</p>
+                <p class="site-title"><a href="/Home/"><img src="../Images/logos/CINE PIPOCA.png" class="img-responsive" /></a></p>
             </div>
             <div class="float-right">
                 <section id="login">
@@ -24,31 +23,9 @@
                 </section>
                 <nav role="navigation">
                     <ul class="nav nav-pills">
-                        
-                            <li role="presentation" class="active">
-
-                                @Html.ActionLink(" Home", "Index", "Home",null, new { @class = "glyphicon glyphicon-star" })
-
-                            </li>
-                        
-                        <li role="presentation">@Html.ActionLink(" Lista de Filmes", "Index", "Filmes",null, new { @class = "glyphicon glyphicon-list" })</li>
-                        <li role="presentation">
-                            <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-                                    Teste <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                                    <li role="presentation">
-                                        @Html.ActionLink(" Cria Base Filmes", "Index", "ManutencaoFilmes", null, new { /*@role = "menuitem"*/ @class = "glyphicon glyphicon-list" })
-                                    </li>
-                                </ul>
-                                
-                            </div>
-                          
-
-                        </li>
-                        <li role="presentation">@Html.ActionLink(" Mais Recentes", "AtualizarBase","Filmes",null, new { @class = "glyphicon glyphicon-star" })</li>
-
+                        <li role="presentation" class="active">@Html.ActionLink(" Home", "Index", "Home", null, new { @class = "glyphicon glyphicon-star" })</li>
+                        <li role="presentation">@Html.ActionLink(" Lista de Filmes", "Index", "Filmes", null, new { @class = "glyphicon glyphicon-list" })</li>
+                        <li role="presentation">@Html.ActionLink("Área Restrita", "Index", "ManutencaoFilmes", null, new { @role = "menuitem", @class = "glyphicon glyphicon-list" })</li>
                     </ul>
                 </nav>
             </div>
@@ -63,7 +40,11 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                <p>&copy; @DateTime.Now.Year - ALOA-HAAS®</p>
+            </div>
+
+            <div class="float-right">
+                <img src="../../Images/logos/var_6_0_tmdb-logo-1Line-GreenGradient-Shadow-Bree.png" style="width: 180px;" />
             </div>
         </div>
     </footer>
