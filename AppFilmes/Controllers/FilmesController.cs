@@ -1,17 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO;
-using System.Text;
-using Microsoft.Ajax.Utilities;
-using MySql.Data.MySqlClient;
-using AppFilmes.Models;
-using System.Collections.Generic;
+﻿using AppFilmes.Models;
+using System;
 using System.Linq;
+using System.Text;
 using System.Web.Configuration;
 using System.Web.Mvc;
 using TMDbLib.Client;
-using TMDbLib.Objects.General;
-using TMDbLib.Objects.Movies;
 
 
 namespace AppFilmes.Controllers

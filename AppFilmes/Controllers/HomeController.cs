@@ -93,10 +93,6 @@ namespace AppFilmes.Controllers
             }
 
 
-
-
-
-
             var baseAddress = new Uri("http://api.themoviedb.org/3/");
 
 

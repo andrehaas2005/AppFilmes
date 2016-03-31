@@ -7,6 +7,7 @@ using AppFilmes.Models;
 
 namespace AppFilmes.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         //
