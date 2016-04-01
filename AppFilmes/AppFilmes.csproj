@@ -50,6 +50,14 @@
     <Reference Include="Hasseware.Net.TMDb">
       <HintPath>..\packages\Hasseware.TheMovieDB.1.2.6.0\lib\net45\Hasseware.Net.TMDb.dll</HintPath>
     </Reference>
+    <Reference Include="MembershipService.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MembershipService.Mvc.0.1\lib\net40\MembershipService.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MembershipService.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MembershipService.Mvc.0.1\lib\net40\MembershipService.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.8\lib\net45\MySql.Data.dll</HintPath>
@@ -57,6 +65,10 @@
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.Entity.6.9.8\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MySql.Web, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Web.6.9.8\lib\net45\MySql.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -193,6 +205,7 @@
     <Compile Include="Controllers\FilmesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManutencaoFilmesController.cs" />
+    <Compile Include="Controllers\MembershipServiceController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs">
       <SubType>Code</SubType>
     </Compile>

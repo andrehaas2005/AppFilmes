@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Web.Security;
 using DotNetOpenAuth.AspNet;
 using Microsoft.Web.WebPages.OAuth;
+using MySql.Data.MySqlClient.Authentication;
+using MySql.Web.Security;
 using WebMatrix.WebData;
 using AppFilmes.Filters;
 using AppFilmes.Models;
@@ -35,10 +37,16 @@ namespace AppFilmes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            var account = new MySqlSimpleMembershipProvider();
+
+            if (ModelState.IsValid && MySqlWebSecurity.Login(model.UserName, model.Password, model.RememberMe))//account.ValidateUser(model.UserName, model.Password))
             {
                 return RedirectToLocal(returnUrl);
             }
+            //if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //{
+            //    return RedirectToLocal(returnUrl);
+            //}
 
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "The user name or password provided is incorrect.");
@@ -52,7 +60,9 @@ namespace AppFilmes.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            MySqlWebSecurity.Logout();
+            
+            //WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -79,9 +89,21 @@ namespace AppFilmes.Controllers
                 // Attempt to register the user
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    
+
+                    
+                    MySqlWebSecurity.CreateAccount(model.UserName, model.Password);
+                    
+                    
+
+                    if (MySqlWebSecurity.Login(model.UserName, model.Password))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                   
+                    //WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    //WebSecurity.Login(model.UserName, model.Password);
+                    return RedirectToAction("Login", "Account");
                 }
                 catch (MembershipCreateUserException e)
                 {
