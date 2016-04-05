@@ -99,8 +99,6 @@ C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.csprojResolveAssemblyRefer
 C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\obj\Debug\AppFilmes.pdb
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\EntityFramework.SqlServer.dll
-C:\ProjetoNet\AppFilmes\AppFilmes\bin\MySql.Data.dll
-C:\ProjetoNet\AppFilmes\AppFilmes\bin\MySql.Data.Entity.EF6.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\EntityFramework.SqlServer.xml
 D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\EntityFramework.SqlServer.dll
 D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\MySql.Data.dll
@@ -118,6 +116,5 @@ D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.H
 D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Net.Http.Formatting.xml
 D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.xml
 D:\Andre Haas\Documentos\Projetos\AppFilmes\AppFilmes\AppFilmes\bin\System.Web.Http.WebHost.xml
-C:\ProjetoNet\AppFilmes\AppFilmes\bin\MySql.Web.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\MembershipService.Common.dll
 C:\ProjetoNet\AppFilmes\AppFilmes\bin\MembershipService.Mvc.dll

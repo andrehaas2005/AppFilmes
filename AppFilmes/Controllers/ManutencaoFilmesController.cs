@@ -105,7 +105,7 @@ namespace AppFilmes.Controllers
                 var tbmDbFilme = tmDbClient.GetMovieList(MovieListType.Popular, "pt", 0);
                 if (tbmDbFilme.TotalResults > lstFilmesNoBanco.Count())
                 {
-                    for (int i = 0; i < tbmDbFilme.TotalPages; i++)
+                    for (int i = 1; i < tbmDbFilme.TotalPages; i++)
                     {
                         listFilmeContainers.Add(tmDbClient.GetMovieList(MovieListType.Popular, "pt", i));
                     }

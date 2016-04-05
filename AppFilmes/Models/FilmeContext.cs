@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using MySql.Data.MySqlClient;
 
 namespace AppFilmes.Models
 {
@@ -19,6 +18,7 @@ namespace AppFilmes.Models
         public DbSet<Foto_Backdrops> Foto_Backdrops { get; set; }
         public DbSet<Foto_Posters> Foto_Posters { get; set; }
       //  public DbSet<Filme_Genero> FilmeGeneros { get; set; }
+        
 
         
 
